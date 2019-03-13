@@ -1,7 +1,6 @@
-package Untils;
+package until;
 
-import java.io.*;
-import Bean.CommandLine;
+import bean.CommandLine;
 
 public class Command {
 	public static boolean isInt(String value) {  
@@ -13,7 +12,7 @@ public class Command {
         return true;  
     }  
 	
-		public CommandLine Command(String[] args) {
+		public CommandLine ParseCommand(String[] args) {
 			//使用CommandLine来存储相对应的命令
 			CommandLine CommandLine=new CommandLine();
 			int length=args.length;
