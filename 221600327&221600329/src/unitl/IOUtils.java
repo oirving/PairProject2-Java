@@ -1,4 +1,4 @@
-package until;
+package unitl;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -35,8 +35,8 @@ public class IOUtils {
 	 * 将制定字符串输出到result.txt
 	 * @param fileContent 字符串
 	 */
-	public static void writeFile(String fileContent) {
-		 File outputFile = new File("result.txt");
+	public static void writeFile(String fileContent, String fileName) {
+		 File outputFile = new File(fileName);
 		 BufferedWriter writer = null;
          try {
 			writer = new BufferedWriter(new FileWriter(outputFile));
@@ -47,7 +47,7 @@ public class IOUtils {
 		}finally {
 			try {
 				if(writer != null) {
-				writer.close();
+					writer.close();
 				}
 			} catch (IOException e) {
 				e.printStackTrace();

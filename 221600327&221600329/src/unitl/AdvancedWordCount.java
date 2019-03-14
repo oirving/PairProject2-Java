@@ -1,4 +1,4 @@
-package until;
+package unitl;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -32,13 +32,10 @@ public class AdvancedWordCount {
 		//计算字符数
         try {
             while ((line = bufferedReader.readLine()) != null) {
-            	++count;
-                if (Pattern.matches("Title: .*", line)) {
-                	count -= 2;
-                	count += line.replaceAll("\r\n", "\n").length() - 7;
+            	if (Pattern.matches("Title: .*", line)) {
+                	count += line.replaceAll("\r\n", "\n").length() - 6;
                 } else if(Pattern.matches("Abstract: .*", line)) {
-                    count += line.replaceAll("\r\n", "\n").length() - 10;
-                    count -= 2;
+                    count += line.replaceAll("\r\n", "\n").length() - 9;
                 }
             }
         } catch (IOException e) {
@@ -54,7 +51,7 @@ public class AdvancedWordCount {
             }
         }
 		
-	return count;
+	return (count-1);
 	}
 	/**
 	 * 计算文件单词数
@@ -89,14 +86,14 @@ public class AdvancedWordCount {
 		String noLetterOrDigitalRegex = "[^a-zA-Z0-9]";
 		String updateString = stringBuffer
 				.toString()
-				.replaceAll("Title: ", "")
-				.replaceAll("Abstract: ", "")
+				.replaceAll("Title: ", "|")
+				.replaceAll("Abstract: ", "|")
 				.toLowerCase()
 				.replaceAll(noLetterOrDigitalRegex, "|");
 		//按分隔符"|"，分割字符串
 		String splitStrings[] =  updateString.split("\\|");
 		
-		String regex = "[a-z]{4}.*";
+		String regex = "^[a-z]{4}[a-z0-9]*";
 		long countOfWord = 0;
 		for(int i = 0; i < splitStrings.length; i++) {
 			if(Pattern.matches(regex, splitStrings[i])) {
@@ -215,6 +212,9 @@ public class AdvancedWordCount {
 		        if (topN.peek().getCountNum() < entry.getValue()) {
 		          topN.poll();
 		          topN.offer(new Word(entry.getKey(), entry.getValue()));
+		        }else if(topN.peek().getKey().compareTo(entry.getKey())>0){
+		        	topN.poll();
+			        topN.offer(new Word(entry.getKey(), entry.getValue()));
 		        }
 		      }
 		    }
@@ -407,6 +407,9 @@ public class AdvancedWordCount {
 		        if (topN.peek().getCountNum() < entry.getValue()) {
 		          topN.poll();
 		          topN.offer(new Word(entry.getKey(), entry.getValue()));
+		        }else if(topN.peek().getKey().compareTo(entry.getKey())>0){
+		        	topN.poll();
+			        topN.offer(new Word(entry.getKey(), entry.getValue()));
 		        }
 		      }
 		    }

@@ -1,4 +1,4 @@
-package until;
+package unitl;
 
 import bean.CommandLine;
 
@@ -26,7 +26,7 @@ public class Command {
 					}catch(Exception e) {
 						e.printStackTrace();
 					}
-					System.out.println("input "+CommandLine.getInputFileName());
+//					System.out.println("input "+CommandLine.getInputFileName());
 					i++;//参数存在则移到下一位
 					break;
 			        //读入输出文件名
@@ -36,7 +36,7 @@ public class Command {
 					}catch(Exception e) {
 						e.printStackTrace();
 					}
-					System.out.println("output "+CommandLine.getoutputFileName());
+//					System.out.println("output "+CommandLine.getoutputFileName());
 					i++;
 					break;
 					//读入权重
@@ -60,7 +60,7 @@ public class Command {
 							i++;
 						}
 					}
-					System.out.println(CommandLine.getWordGroup());
+//					System.out.println(CommandLine.getWordGroup());
 					break;
 					//词频
 				case "-n":
@@ -74,10 +74,10 @@ public class Command {
 							i++;
 						}
 					}
-					System.out.println(CommandLine.getWordFrequency());
+//					System.out.println(CommandLine.getWordFrequency());
 					break;
 				default:
-					System.out.println("No such command!");
+//					System.out.println("No such command!");
 					break;
 				}
 			

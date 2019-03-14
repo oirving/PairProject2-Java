@@ -63,6 +63,10 @@ public class CommandLine {
 	
 	@Override
 	public String toString() {
-		return inputFileName+outputFileName+weight+wordGroup+wordFrequency;
+		return "inputFileName: "+inputFileName+"\n"+
+				"outputFileName: "+outputFileName+"\n"+
+				"weight: "+weight+"\n"+
+				"wordGroup: "+wordGroup+"\n"+
+				"wordFrequency: "+wordFrequency;
 	}
 }
