@@ -1,6 +1,8 @@
 package until;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -15,6 +17,141 @@ import java.util.regex.Pattern;
 import bean.Word;
 
 public class AdvancedWordCount {
+	/**
+	 * 计算文件字符数
+	 * @param fileName 文件名
+	 * @return countOfCharacter 字符数
+	 */
+	public long characterCount(String fileName) {
+		BufferedReader bufferedReader = null;
+		StringBuffer stringBuffer = new StringBuffer();
+		//读入文件数据
+		bufferedReader = IOUtils.readFile(fileName);
+		String line = null;
+		long count = 0;
+		//计算字符数
+        try {
+            while ((line = bufferedReader.readLine()) != null) {
+            	++count;
+                if (Pattern.matches("Title: .*", line)) {
+                	count -= 2;
+                	count += line.replaceAll("\r\n", "\n").length() - 7;
+                } else if(Pattern.matches("Abstract: .*", line)) {
+                    count += line.replaceAll("\r\n", "\n").length() - 10;
+                    count -= 2;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+            	if(bufferedReader!=null) {
+            		bufferedReader.close();
+            	}
+            	
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+		
+	return count;
+	}
+	/**
+	 * 计算文件单词数
+	 * @param fileName 文件名
+	 * @return countOfWord 单词数
+	 */
+	public long wordCount(String fileName) {
+		BufferedReader bufferedReader = null;
+		StringBuffer stringBuffer = new StringBuffer();
+		//读入文件数据
+		bufferedReader = IOUtils.readFile(fileName);
+		int byteCode = -1;
+		//转换为字符串 
+		try {
+			while((byteCode = bufferedReader.read()) != -1) {
+				//将十进制ASCII码值，转化为字符，添加到data
+				stringBuffer.append((char)byteCode);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(bufferedReader != null) {
+					bufferedReader.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//用分隔符"|"替换字符串中非字母数字的字符
+		String noLetterOrDigitalRegex = "[^a-zA-Z0-9]";
+		String updateString = stringBuffer
+				.toString()
+				.replaceAll("Title: ", "")
+				.replaceAll("Abstract: ", "")
+				.toLowerCase()
+				.replaceAll(noLetterOrDigitalRegex, "|");
+		//按分隔符"|"，分割字符串
+		String splitStrings[] =  updateString.split("\\|");
+		
+		String regex = "[a-z]{4}.*";
+		long countOfWord = 0;
+		for(int i = 0; i < splitStrings.length; i++) {
+			if(Pattern.matches(regex, splitStrings[i])) {
+				countOfWord++;
+			}
+		}
+		
+		return countOfWord;
+	}
+
+	/**
+	 * 计算文件行数
+	 * @param fileName 文件名
+	 * @return count 行数
+	 */
+	public long lineCount(String fileName) {
+		FileReader filereader = null;
+		BufferedReader bufferedreader = null;
+        //读入文件数据
+		long count=0;
+		//统计行数
+		try {
+			filereader = new FileReader(fileName);
+			bufferedreader = new BufferedReader(filereader);
+
+			String value = bufferedreader.readLine();
+			//按行读取
+			while (value != null) {
+				//先判断是否为空
+				if(!value.trim().isEmpty())
+					//string.trim()去除空白字符
+					count++;
+				if(value.contains("Title: ")) {
+					--count;
+				}
+				value = bufferedreader.readLine();
+				//继续往下读
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+          finally { 
+        	  try {
+        		  if (bufferedreader != null)
+        			  bufferedreader.close();
+				  if (filereader != null)
+					  filereader.close();
+			      } catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return count;
+	}
 
 	/**
 	 * 计算加权出现次数topk的单词及其词频
@@ -148,7 +285,7 @@ public class AdvancedWordCount {
 											wordEndPosition = j;
 											//得到一个单词,加入到队列
 											wordReadyQueue.add(line.substring(wordStratPosition, wordEndPosition));
-											System.out.println(line.substring(wordStratPosition, wordEndPosition));
+//											System.out.println(line.substring(wordStratPosition, wordEndPosition));
 											groupnumber++;//词组单词数+1
 											if(groupnumber == 1) {
 												flagPosition = j;
@@ -160,7 +297,7 @@ public class AdvancedWordCount {
 											wordEndPosition = j+1;
 											//得到一个单词,加入到队列
 											wordReadyQueue.add(line.substring(wordStratPosition));
-											System.out.println(line.substring(wordStratPosition));
+//											System.out.println(line.substring(wordStratPosition));
 											groupnumber++;//词组单词数+1
 											if(groupnumber == 1) {
 												flagPosition = j;
