@@ -1,4 +1,4 @@
-package Bean;
+package bean;
 
 public class CommandLine {
 	
@@ -13,13 +13,12 @@ public class CommandLine {
 	//top词频，默认为top10
 	private int wordFrequency;
 	
-	public CommandLine CommandLine() {
+	public CommandLine() {
 		inputFileName="input.txt";
 		outputFileName="output.txt";
 		weight=0;	
 		wordGroup=-1;
 		wordFrequency=10;
-		return this;
 	}
 	//输入文件存取
 	public String getInputFileName() {
@@ -60,5 +59,14 @@ public class CommandLine {
 	
 	public void setWordFrequency(int wordFrequency) {
 		this.wordFrequency=wordFrequency;
+	}
+	
+	@Override
+	public String toString() {
+		return "inputFileName: "+inputFileName+"\n"+
+				"outputFileName: "+outputFileName+"\n"+
+				"weight: "+weight+"\n"+
+				"wordGroup: "+wordGroup+"\n"+
+				"wordFrequency: "+wordFrequency;
 	}
 }

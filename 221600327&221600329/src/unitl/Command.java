@@ -1,7 +1,6 @@
-package Untils;
+package unitl;
 
-import java.io.*;
-import Bean.CommandLine;
+import bean.CommandLine;
 
 public class Command {
 	public static boolean isInt(String value) {  
@@ -13,7 +12,7 @@ public class Command {
         return true;  
     }  
 	
-		public CommandLine Command(String[] args) {
+		public CommandLine ParseCommand(String[] args) {
 			//使用CommandLine来存储相对应的命令
 			CommandLine CommandLine=new CommandLine();
 			int length=args.length;
@@ -27,7 +26,7 @@ public class Command {
 					}catch(Exception e) {
 						e.printStackTrace();
 					}
-					System.out.println("input "+CommandLine.getInputFileName());
+//					System.out.println("input "+CommandLine.getInputFileName());
 					i++;//参数存在则移到下一位
 					break;
 			        //读入输出文件名
@@ -37,7 +36,7 @@ public class Command {
 					}catch(Exception e) {
 						e.printStackTrace();
 					}
-					System.out.println("output "+CommandLine.getoutputFileName());
+//					System.out.println("output "+CommandLine.getoutputFileName());
 					i++;
 					break;
 					//读入权重
@@ -61,7 +60,7 @@ public class Command {
 							i++;
 						}
 					}
-					System.out.println(CommandLine.getWordGroup());
+//					System.out.println(CommandLine.getWordGroup());
 					break;
 					//词频
 				case "-n":
@@ -75,10 +74,10 @@ public class Command {
 							i++;
 						}
 					}
-					System.out.println(CommandLine.getWordFrequency());
+//					System.out.println(CommandLine.getWordFrequency());
 					break;
 				default:
-					System.out.println("No such command!");
+//					System.out.println("No such command!");
 					break;
 				}
 			
